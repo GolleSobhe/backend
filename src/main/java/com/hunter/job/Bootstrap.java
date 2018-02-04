@@ -15,5 +15,22 @@ import javax.annotation.PostConstruct;
 @Component
 public class Bootstrap {
 
+    @Autowired
+    private EntrepriseService entrepriseService;
 
+    @PostConstruct
+    public void init() {
+        Entreprise e = new Entreprise();
+        Entreprise e2 = new Entreprise();
+        Entreprise e3 = new Entreprise();
+
+        e.setNom("entriprise1");
+        entrepriseService.creerEntreprise(e);
+
+        e2.setNom("entriprise2");
+        entrepriseService.creerEntreprise(e2);
+
+        e3.setNom("entriprise3");
+        entrepriseService.creerEntreprise(e3);
+    }
 }
