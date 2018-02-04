@@ -15,17 +15,17 @@ public class Entreprise {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
 
+    private String nom;
+
+    public Entreprise() {
+    }
+
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    private String nom;
-
-    public Entreprise() {
     }
 
     public String getNom() {
