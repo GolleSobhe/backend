@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
  * Created by telly on 28/01/18.
  */
 @Repository
-public interface EntrepriseRepository extends PagingAndSortingRepository<Entreprise,Long>{
+public interface EntrepriseRepository extends RepositoryBasique<Entreprise>{
 }

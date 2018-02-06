@@ -24,13 +24,26 @@ public class Bootstrap {
         Entreprise e2 = new Entreprise();
         Entreprise e3 = new Entreprise();
 
-        e.setNom("entriprise1");
+        Entreprise e4 = new Entreprise();
+        Entreprise e5 = new Entreprise();
+        Entreprise e6 = new Entreprise();
+
+        e.setNom("Google");
         entrepriseService.creerEntreprise(e);
 
-        e2.setNom("entriprise2");
+        e2.setNom("Orange");
         entrepriseService.creerEntreprise(e2);
 
-        e3.setNom("entriprise3");
+        e3.setNom("Areeba");
+        entrepriseService.creerEntreprise(e3);
+
+        e4.setNom("Microsoft");
+        entrepriseService.creerEntreprise(e);
+
+        e5.setNom("Free");
+        entrepriseService.creerEntreprise(e2);
+
+        e6.setNom("SFR");
         entrepriseService.creerEntreprise(e3);
     }
 }
