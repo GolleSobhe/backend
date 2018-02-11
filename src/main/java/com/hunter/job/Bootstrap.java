@@ -1,11 +1,11 @@
 package com.hunter.job;
 
 import com.hunter.job.domain.Entreprise;
+import com.hunter.job.domain.Offre;
 import com.hunter.job.services.EntrepriseService;
-import com.hunter.job.services.InitializationService;
+import com.hunter.job.services.OffreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 
@@ -18,6 +18,9 @@ public class Bootstrap {
     @Autowired
     private EntrepriseService entrepriseService;
 
+    @Autowired
+    private OffreService offreService;
+
     @PostConstruct
     public void init() {
         Entreprise e = new Entreprise();
@@ -28,6 +31,13 @@ public class Bootstrap {
         Entreprise e5 = new Entreprise();
         Entreprise e6 = new Entreprise();
 
+        Offre offre1 = new Offre();
+        Offre offre2 = new Offre();
+        Offre offre3 = new Offre();
+        Offre offre4 = new Offre();
+
+
+        //Entreprise
         e.setNom("Google");
         entrepriseService.creerEntreprise(e);
 
@@ -45,5 +55,19 @@ public class Bootstrap {
 
         e6.setNom("SFR");
         entrepriseService.creerEntreprise(e3);
+
+        //Offre
+        offre1.setNom("developpeur en c");
+        offreService.creerOffre(offre1);
+
+        offre2.setNom("soudeur");
+        offreService.creerOffre(offre2);
+
+        offre3.setNom("vendeur");
+        offreService.creerOffre(offre3);
+
+        offre4.setNom("chauffeur");
+        offreService.creerOffre(offre4);
+
     }
 }
