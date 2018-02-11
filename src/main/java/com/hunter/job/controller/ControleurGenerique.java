@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.List;
 
+@RequestMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
+        produces =  MediaType.APPLICATION_JSON_VALUE)
 public class ControleurGenerique<T extends ModelBasique> {
     
     @Autowired
@@ -18,22 +20,22 @@ public class ControleurGenerique<T extends ModelBasique> {
 
     public ControleurGenerique() {}
 
-    @RequestMapping(value = "create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "create", method = RequestMethod.POST)
     public T create(@RequestBody T entity) {
         return repositoryBasique.save(entity);
     }
 
-    @RequestMapping(value = "{id}/update", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "{id}/update", method = RequestMethod.PUT)
     public T update(@PathVariable(value = "id") long id, @RequestBody T entity) {
         return repositoryBasique.save(entity);
     }
 
-    @RequestMapping(value = "{id}/delete", method = RequestMethod.DELETE,  consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "{id}/delete", method = RequestMethod.DELETE)
     public void delete(@PathVariable long id) {
         repositoryBasique.delete(id);
     }
 
-    @RequestMapping(value = "delete", method = RequestMethod.DELETE,  consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "delete", method = RequestMethod.DELETE)
     public void deleteAll() {
         repositoryBasique.deleteAll();
     }
@@ -45,6 +47,6 @@ public class ControleurGenerique<T extends ModelBasique> {
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public List<T> getAll() {
-        return (List<T>) repositoryBasique.findAll();
+        return repositoryBasique.findAll();
     }
 }
