@@ -1,5 +1,6 @@
 .gradle
 /build/
+out/
 !gradle/wrapper/gradle-wrapper.jar
 
 ### STS ###
@@ -61,8 +62,6 @@ cmake-build-debug/
 
 ## Plugin-specific files:
 
-# IntelliJ
-/out/
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/
