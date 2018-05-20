@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Offre{
@@ -12,8 +13,21 @@ public class Offre{
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    public Offre() {
+    @NotNull
+    private String pays;
 
+    @NotNull
+    private String ville;
+
+    @NotNull
+    private String titre;
+
+
+    public Offre() { }
+
+    public Long getId() {
+        return id;
     }
+
 
 }
