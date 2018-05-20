@@ -15,11 +15,5 @@ public class BootstrapService {
     @Autowired
     private EntrepriseService entrepriseService;
 
-    @PostConstruct
-    public void init(){
-        Entreprise e = new Entreprise();
-        e.setNom("ssds");
-        System.out.println("sdfds");
-        entrepriseService.creerEntreprise(e);
-    }
+
 }
