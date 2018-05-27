@@ -1,6 +1,8 @@
 package com.hunter.job.repository
 
+import com.hunter.job.domain.Entreprise
 import com.hunter.job.domain.Offre
+import com.hunter.job.repositories.EntrepriseRepository
 import com.hunter.job.repositories.OffreRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -17,10 +19,15 @@ class OffreRepositoryISpec extends Specification{
 
     @Autowired
     OffreRepository offreRepository
+    @Autowired
+    EntrepriseRepository entrepriseRepository
 
     def "test creation offre"(){
-        given: "une offre valide"
-        Offre offre = new Offre(pays: "guinee",ville: "conakry",titre: "ingenieur")
+        given: "une entreprise sauvegardee"
+        Entreprise entreprise = new Entreprise("entreprise")
+        entrepriseRepository.save(entreprise)
+        and: "une offre valide"
+        Offre offre = new Offre("guinee","conakry","ingenieur","descr",entreprise)
 
         when: "on enregistre l'offre"
         Offre savedOffre = offreRepository.save(offre)

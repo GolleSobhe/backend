@@ -22,21 +22,23 @@ public class OffreService {
         return offre;
     }
 
-    public Page<Offre> findOffreByPage(String pays,String ville,String titre,int numeroPage){
+    public Page<Offre> findOffres(String pays,String ville,String titre,int numeroPage){
         Pageable pageable = new PageRequest(numeroPage,30);
+        if(pays == null && ville == null && titre == null)
+            return offreRepository.findAll(pageable);
         if(pays!=null && ville!=null && titre!=null)
-            return offreRepository.findByPaysAndVilleAndTitreLike(pageable);
+            return offreRepository.findByPaysAndVilleAndTitreIgnoreCaseContaining(pays,ville,titre,pageable);
         if(pays!=null && ville!=null && titre==null)
-            return offreRepository.findByPaysAndVille(pageable);
+            return offreRepository.findByPaysAndVille(pays,ville,pageable);
         if(pays!=null && ville==null && titre!=null)
-            return offreRepository.findByPaysAndTitreLike(pageable);
+            return offreRepository.findByPaysAndTitreIgnoreCaseContaining(pays,titre,pageable);
         if(pays!=null && ville==null && titre==null)
-            return offreRepository.findByPays(pageable);
+            return offreRepository.findByPays(pays,pageable);
         if(ville!=null && titre!=null)
-            return offreRepository.findByVilleAndTitreLike(pageable);
+            return offreRepository.findByVilleAndTitreIgnoreCaseContaining(ville,titre,pageable);
         if(ville!=null)
-            return offreRepository.findByVille(pageable);
-        return offreRepository.findByTitreLike(pageable);
+            return offreRepository.findByVille(ville,pageable);
+        return offreRepository.findByTitreIgnoreCaseContaining(titre,pageable);
     }
 
 }
