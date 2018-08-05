@@ -30,4 +30,4 @@ deploy:
   provider: heroku
   api_key:
       secure: "$HEROKU_TOKEN"
-app: gollesobhe
+  app: gollesobhe
