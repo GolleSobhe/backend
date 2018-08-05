@@ -24,4 +24,5 @@ cache:
 before_install:
   - chmod +x gradlew
 after_success:
-- ./gradlew sonarqube
+  - ./gradlew sonarqube
+  - bash <(curl -s https://codecov.io/bash)
