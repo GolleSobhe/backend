@@ -11,7 +11,7 @@ notifications:
 
 addons:
   sonarcloud:
-    organization: "kikalaSobhe"
+    organization: "kikalasobhe-github"
     token:
       secure: "$SONAR_TOKEN"
 
