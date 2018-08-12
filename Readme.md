@@ -1,10 +1,13 @@
-## Intégration Continue:
+#GolleSobhe-Backend
 
-https://travis-ci.org/GolleSobhe/backend
 [![Build Status](https://travis-ci.org/GolleSobhe/backend.svg?branch=master)](https://travis-ci.org/GolleSobhe/backend)
 [![Sonarcloud Status](https://sonarcloud.io/api/project_badges/measure?project=com.hunter.job-travis-project&metric=alert_status)](https://sonarcloud.io/dashboard?id=com.hunter.job-travis-project)
+[![Sonarcloud Status](https://sonarcloud.io/api/project_badges/measure?project=com.hunter.job-travis-project&metric=bugs)](https://sonarcloud.io/dashboard?id=com.hunter.job-travis-project)
+[![Sonarcloud Status](https://sonarcloud.io/api/project_badges/measure?project=com.hunter.job-travis-project&metric=code_smells)](https://sonarcloud.io/dashboard?id=com.hunter.job-travis-project)
 
-## Qualité de code:
+## Pipeline
+
+https://travis-ci.org/GolleSobhe/backend
 
 https://sonarcloud.io/dashboard?id=com.hunter.job-travis-project
 
