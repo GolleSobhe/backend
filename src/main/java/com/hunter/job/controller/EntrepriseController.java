@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
  * Created by telly on 28/01/18.
  */
 @RestController
-@RequestMapping("/entreprises")
+@RequestMapping("/entreprise")
 public class EntrepriseController{
 
 }
