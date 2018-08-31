@@ -1,22 +1,20 @@
 package com.hunter.job.domain;
 
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+@Getter @Setter @NoArgsConstructor
 @Entity
 public class Offre{
 
-    public Offre() { }
-
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @NotNull
-    private String pays;
-
-    @NotNull
-    private String ville;
 
     @NotNull
     private String titre;
@@ -24,38 +22,26 @@ public class Offre{
     @NotNull
     private String description;
 
+    @NotNull
+    private Long salaireMinimum;
+
+    @NotNull
+    private Long salaireMaximum;
+
+    @NotNull
+    private TypeOffre type;
+
     @ManyToOne
     private Entreprise entreprise;
 
-    public Offre(String pays,String ville,String titre,String description,Entreprise entreprise){
-        this.pays = pays;
-        this.ville = ville;
+    public Offre(String titre,String description,Entreprise entreprise,Long salaireMinimum,Long salaireMaximum,TypeOffre type){
         this.titre = titre;
         this.description = description;
         this.entreprise = entreprise;
+        this.salaireMinimum = salaireMinimum;
+        this.salaireMaximum = salaireMaximum;
+        this.type = type;
     }
 
-    public String getPays() {
-        return pays;
-    }
 
-    public String getVille() {
-        return ville;
-    }
-
-    public String getTitre() {
-        return titre;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public Entreprise getEntreprise() {
-        return entreprise;
-    }
-
-    public Long getId() {
-        return id;
-    }
 }

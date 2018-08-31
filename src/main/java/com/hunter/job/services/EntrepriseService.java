@@ -30,4 +30,8 @@ public class EntrepriseService {
     public Entreprise save(Entreprise entreprise){
         return  entrepriseRepository.save(entreprise);
     }
+
+    public Entreprise findById(Long id){
+        return entrepriseRepository.findById(id);
+    }
 }

@@ -19,16 +19,5 @@ class OffreServiceSpec extends Specification{
         offreService.offreRepository = offreRepository
     }
 
-    def "test type offreRepository"(){
-        expect: "OffreRepository est de type Paging ang Sorting Repository"
-        offreRepository instanceof PagingAndSortingRepository
-    }
 
-    def "test delegation de la recherche au repository"(){
-        when: "on recherche toutes les offres"
-        offreService.findOffres(null,null,null,1)
-
-        then: "la recherche est deleguee au repository"
-        1 * offreRepository.findAll(_)
-    }
 }

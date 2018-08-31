@@ -22,7 +22,7 @@ public class EntrepriseController{
     private EntrepriseService entrepriseService;
 
     @GetMapping
-    @ApiOperation(value = "retourne la liste de toutes les etreprises")
+    @ApiOperation(value = "retourne la liste de toutes les entreprises")
     public List<Entreprise> getAll(){
         return entrepriseService.findAll();
     }

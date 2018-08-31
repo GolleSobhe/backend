@@ -30,4 +30,8 @@ public class EntrepriseRepository {
         entityManager.persist(entreprise);
         return entreprise;
     }
+
+    public Entreprise findById(Long id){
+        return  entityManager.find(Entreprise.class,id);
+    }
 }
