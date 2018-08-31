@@ -8,7 +8,7 @@
 
 ## Pipeline
 
-https://travis-ci.org/GolleSobhe/backend
+https://travis-ci.org/GolleSobhe/hunterJobServer
 
 https://sonarcloud.io/dashboard?id=com.hunter.job-travis-project
 
