@@ -14,7 +14,7 @@ public class CandidatService {
     @Autowired
     private CandidatRepository candidatRepository;
 
-    public Candidat create(Candidat candidat){
+    public Candidat save(Candidat candidat){
         return this.candidatRepository.save(candidat);
     }
 }

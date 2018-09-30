@@ -22,6 +22,12 @@ public class Candidat{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private  String prenom;
+    private String nom;
 
+    private String prenom;
+
+    public Candidat(String nom, String prenom) {
+        this.nom = nom;
+        this.prenom = prenom;
+    }
 }

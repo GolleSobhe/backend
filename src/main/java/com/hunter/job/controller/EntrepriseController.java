@@ -1,12 +1,11 @@
 package com.hunter.job.controller;
 
 import com.hunter.job.domain.Entreprise;
+import com.hunter.job.dto.EntrepriseDto;
 import com.hunter.job.services.EntrepriseService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,10 +20,15 @@ public class EntrepriseController{
     @Autowired
     private EntrepriseService entrepriseService;
 
-    @GetMapping
+    @GetMapping(value = "/all")
     @ApiOperation(value = "retourne la liste de toutes les entreprises")
     public List<Entreprise> getAll(){
         return entrepriseService.findAll();
     }
 
+    @PostMapping(value = "/new")
+    public Entreprise save(@RequestBody EntrepriseDto entrepriseDto){
+        Entreprise entreprise = new Entreprise(entrepriseDto.getNom());
+        return entrepriseService.save(entreprise);
+    }
 }

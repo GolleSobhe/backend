@@ -1,5 +1,6 @@
 package com.hunter.job.domain;
 
+import com.hunter.job.dto.OffreDto;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,31 +17,26 @@ public class Offre{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
     private String titre;
 
-    @NotNull
     private String description;
 
-    @NotNull
     private Long salaireMinimum;
 
-    @NotNull
     private Long salaireMaximum;
 
-    @NotNull
     private TypeOffre type;
 
     @ManyToOne
     private Entreprise entreprise;
 
-    public Offre(String titre,String description,Entreprise entreprise,Long salaireMinimum,Long salaireMaximum,TypeOffre type){
-        this.titre = titre;
-        this.description = description;
+    public Offre(OffreDto offreDto,Entreprise entreprise){
+        this.titre = offreDto.getTitre();
+        this.description = offreDto.getDescription();
         this.entreprise = entreprise;
-        this.salaireMinimum = salaireMinimum;
-        this.salaireMaximum = salaireMaximum;
-        this.type = type;
+        this.salaireMinimum = offreDto.getSalaireMinimum();
+        this.salaireMaximum = offreDto.getSalaireMaximum();
+        this.type = offreDto.getType();
     }
 
 

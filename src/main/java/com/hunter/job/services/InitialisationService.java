@@ -3,6 +3,7 @@ package com.hunter.job.services;
 import com.hunter.job.domain.Entreprise;
 import com.hunter.job.domain.Offre;
 import com.hunter.job.domain.TypeOffre;
+import com.hunter.job.dto.OffreDto;
 import com.hunter.job.repositories.EntrepriseRepository;
 import com.hunter.job.repositories.OffreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,8 +38,10 @@ public class InitialisationService {
     }
 
     private void initOffres(){
-        cbgInformaticien = new Offre("Developpeur","coder",cbg,1000L,20000L, TypeOffre.CDD);
-        segComptable = new Offre("Comptable","gerer l'argent",seg,111000L,2000000L,TypeOffre.CDI);
+        OffreDto dto = new OffreDto("Developpeur","coder",1000L,20000L, TypeOffre.CDD);
+        cbgInformaticien = new Offre(dto,cbg);
+        dto = new OffreDto("Comptable","gerer l'argent",111000L,2000000L,TypeOffre.CDI);
+        segComptable = new Offre(dto,seg);
         offreRepository.save(cbgInformaticien);
         offreRepository.save(segComptable);
     }
