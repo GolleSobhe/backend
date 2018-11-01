@@ -24,4 +24,7 @@ public class CandidatRepository {
     }
 
 
+    public Candidat findById(Long candidatId) {
+        return entityManager.find(Candidat.class,candidatId);
+    }
 }

@@ -8,6 +8,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class OffreService {
 
@@ -21,6 +23,12 @@ public class OffreService {
        return offreRepository.save(offre);
     }
 
+    public List<Offre> findOffres(){
+        return offreRepository.findAll();
+    }
 
 
+    public Offre findById(Long offreId) {
+        return offreRepository.findById(offreId);
+    }
 }

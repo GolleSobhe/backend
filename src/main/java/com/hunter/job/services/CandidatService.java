@@ -17,4 +17,8 @@ public class CandidatService {
     public Candidat save(Candidat candidat){
         return this.candidatRepository.save(candidat);
     }
+
+    public Candidat findById(Long candidatId) {
+        return candidatRepository.findById(candidatId);
+    }
 }

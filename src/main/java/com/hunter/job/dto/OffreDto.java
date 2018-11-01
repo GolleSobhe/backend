@@ -1,11 +1,12 @@
 package com.hunter.job.dto;
 
-import com.hunter.job.domain.TypeOffre;
+import com.hunter.job.domain.TypeContrat;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * Created by telly on 16/09/18.
@@ -20,19 +21,35 @@ public class OffreDto {
     private String description;
 
     @NotNull
-    private Long salaireMinimum;
+    private Long salaire;
 
     @NotNull
-    private Long salaireMaximum;
+    private String lieu;
 
     @NotNull
-    private TypeOffre type;
+    private String specialisation;
 
-    public OffreDto(String titre,String description,Long salaireMinimum,Long salaireMaximum,TypeOffre type){
+    @NotNull
+    private String secteurActivite;
+
+    private int anneesExperiences;
+
+    @NotNull
+    private List<String> competences;
+
+    @NotNull
+    private TypeContrat type;
+
+    public OffreDto(String titre,String description,Long salaire,String lieu,String specialisation,
+                    String secteurActivite,int anneesExperiences,List<String> competences,TypeContrat type){
         this.description = description;
         this.titre = titre;
-        this.salaireMaximum =salaireMaximum;
-        this.salaireMinimum = salaireMinimum;
+        this.salaire = salaire;
+        this.anneesExperiences = anneesExperiences;
+        this.competences = competences;
+        this.lieu = lieu;
+        this.secteurActivite = secteurActivite;
+        this.specialisation = specialisation;
         this.type = type;
     }
 }

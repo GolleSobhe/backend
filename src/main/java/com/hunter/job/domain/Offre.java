@@ -1,13 +1,13 @@
 package com.hunter.job.domain;
 
 import com.hunter.job.dto.OffreDto;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Getter @Setter @NoArgsConstructor
 @Entity
@@ -21,22 +21,34 @@ public class Offre{
 
     private String description;
 
-    private Long salaireMinimum;
+    private Long salaire;
 
-    private Long salaireMaximum;
+    private String lieu;
 
-    private TypeOffre type;
+    private String specialisation;
+
+    private String secteurActivite;
+
+    private int anneesExperiences;
+
+    private String competences;
+
+    private TypeContrat type;
 
     @ManyToOne
     private Entreprise entreprise;
 
     public Offre(OffreDto offreDto,Entreprise entreprise){
-        this.titre = offreDto.getTitre();
         this.description = offreDto.getDescription();
-        this.entreprise = entreprise;
-        this.salaireMinimum = offreDto.getSalaireMinimum();
-        this.salaireMaximum = offreDto.getSalaireMaximum();
+        this.titre = offreDto.getTitre();
+        this.salaire = offreDto.getSalaire();
+        this.anneesExperiences = offreDto.getAnneesExperiences();
+        this.competences = String.join(",",offreDto.getCompetences());
+        this.lieu = offreDto.getLieu();
+        this.secteurActivite = offreDto.getSecteurActivite();
+        this.specialisation = offreDto.getSpecialisation();
         this.type = offreDto.getType();
+        this.entreprise = entreprise;
     }
 
 
