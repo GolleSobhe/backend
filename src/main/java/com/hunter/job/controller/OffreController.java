@@ -28,10 +28,10 @@ public class OffreController{
 
     @ApiOperation(value = "enregistrer une offre d'une entreprise")
     @PostMapping(value = "/new")
-    public void save(@RequestParam(value = "entreprise_id") Long entrepriseId, @RequestBody OffreDto offreDto){
+    public Offre save(@RequestParam(value = "entreprise_id") Long entrepriseId, @RequestBody OffreDto offreDto){
         Entreprise entreprise = entrepriseService.findById(entrepriseId);
         Offre offre = new Offre(offreDto,entreprise);
-        offreService.save(offre);
+        return offreService.save(offre);
     }
 
     @ApiOperation(value = "recuperer les competences")

@@ -28,7 +28,7 @@ public class EntrepriseController{
 
     @PostMapping(value = "/new")
     public Entreprise save(@RequestBody EntrepriseDto entrepriseDto){
-        Entreprise entreprise = new Entreprise(entrepriseDto.getNom());
+        Entreprise entreprise = new Entreprise(entrepriseDto);
         return entrepriseService.save(entreprise);
     }
 }

@@ -3,6 +3,7 @@ package com.hunter.job.services;
 import com.hunter.job.domain.Entreprise;
 import com.hunter.job.domain.Offre;
 import com.hunter.job.domain.TypeContrat;
+import com.hunter.job.dto.EntrepriseDto;
 import com.hunter.job.dto.OffreDto;
 import com.hunter.job.repositories.EntrepriseRepository;
 import com.hunter.job.repositories.OffreRepository;
@@ -34,8 +35,10 @@ public class InitialisationService {
     }
 
     private void initEntreprises(){
-        cbg = new Entreprise("Compagnie des bauxite de Guinee");
-        seg = new Entreprise("Societe des Eaux de Guinee");
+        EntrepriseDto dto = new EntrepriseDto("CBG","62200000","pamelap","cbg@net.com",null,"compagnie de mines","mine");
+        cbg = new Entreprise(dto);
+        dto = new EntrepriseDto("SEG","62200000","Conakry","seg@net.com",null,"compagnie dee eaux","eaux");
+        seg = new Entreprise(dto);
         entrepriseRepository.save(cbg);
         entrepriseRepository.save(seg);
     }

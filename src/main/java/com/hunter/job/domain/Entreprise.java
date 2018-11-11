@@ -1,5 +1,6 @@
 package com.hunter.job.domain;
 
+import com.hunter.job.dto.EntrepriseDto;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,11 +23,28 @@ public class Entreprise{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
     private String nom;
 
-    public Entreprise(String nom){
-        this.nom = nom;
+    private String telephone;
+
+    private String adresse;
+
+    private String email;
+
+    private String siteWeb;
+
+    private String description;
+
+    private String secteurActivite;
+
+    public Entreprise(EntrepriseDto entrepriseDto){
+        this.nom = entrepriseDto.getNom();
+        this.adresse = entrepriseDto.getAdresse();
+        this.email = entrepriseDto.getEmail();
+        this.secteurActivite = entrepriseDto.getSecteurActivite();
+        this.siteWeb = entrepriseDto.getSiteWeb();
+        this.description = entrepriseDto.getDescription();
+        this.telephone = entrepriseDto.getTelephone();
     }
 
 }
