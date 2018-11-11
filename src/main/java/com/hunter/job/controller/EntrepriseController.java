@@ -26,6 +26,12 @@ public class EntrepriseController{
         return entrepriseService.findAll();
     }
 
+    @GetMapping(value = "/{id}")
+    @ApiOperation(value = "retourne une entreprise")
+    public Entreprise getById(@PathVariable Long id){
+        return entrepriseService.findById(id);
+    }
+
     @PostMapping(value = "/new")
     public Entreprise save(@RequestBody EntrepriseDto entrepriseDto){
         Entreprise entreprise = new Entreprise(entrepriseDto);
