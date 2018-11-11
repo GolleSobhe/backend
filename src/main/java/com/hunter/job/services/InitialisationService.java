@@ -26,8 +26,6 @@ public class InitialisationService {
 
     private Entreprise cbg;
     private Entreprise seg;
-    private Offre cbgInformaticien;
-    private Offre segComptable;
 
     public void init(){
         initEntreprises();
@@ -48,12 +46,12 @@ public class InitialisationService {
         competences.add("Java");
         OffreDto dto = new OffreDto("Developpeur","coder",1000L,"Conakry","bon",
                 "mines",3, competences,TypeContrat.CDD);
-        cbgInformaticien = new Offre(dto,cbg);
+        Offre cbgInformaticien = new Offre(dto,cbg);
         competences = new ArrayList<>();
         competences.add("Efficace");
         dto = new OffreDto("Comptable","gerer l'argent",111000L,"Conakry","Manager",
                 "Eau",5,competences,TypeContrat.CDI);
-        segComptable = new Offre(dto,seg);
+        Offre segComptable = new Offre(dto,seg);
         offreRepository.save(cbgInformaticien);
         offreRepository.save(segComptable);
     }

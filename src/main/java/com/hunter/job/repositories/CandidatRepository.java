@@ -1,7 +1,6 @@
 package com.hunter.job.repositories;
 
 import com.hunter.job.domain.Candidat;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
