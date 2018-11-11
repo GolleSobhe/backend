@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -33,7 +34,7 @@ public class EntrepriseController{
     }
 
     @PostMapping(value = "/new")
-    public Entreprise save(@RequestBody EntrepriseDto entrepriseDto){
+    public Entreprise save(@Valid @RequestBody EntrepriseDto entrepriseDto){
         Entreprise entreprise = new Entreprise(entrepriseDto);
         return entrepriseService.save(entreprise);
     }

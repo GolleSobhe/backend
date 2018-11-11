@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Arrays;
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class OffreController{
 
     @ApiOperation(value = "enregistrer une offre d'une entreprise")
     @PostMapping(value = "/new")
-    public Offre save(@RequestParam(value = "entreprise_id") Long entrepriseId, @RequestBody OffreDto offreDto){
+    public Offre save(@RequestParam(value = "entreprise_id") Long entrepriseId, @Valid @RequestBody OffreDto offreDto){
         Entreprise entreprise = entrepriseService.findById(entrepriseId);
         Offre offre = new Offre(offreDto,entreprise);
         return offreService.save(offre);
