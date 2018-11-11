@@ -18,8 +18,16 @@ public class CandidatDto {
     @NotNull
     private String prenom;
 
-    public CandidatDto(String nom, String prenom) {
+    private String telephone;
+
+    @NotNull
+    private String email;
+
+
+    public CandidatDto(String nom, String prenom,String telephone,String email) {
         this.nom = nom;
         this.prenom = prenom;
+        this.telephone = telephone;
+        this.email = email;
     }
 }

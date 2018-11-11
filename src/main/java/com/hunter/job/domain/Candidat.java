@@ -1,5 +1,6 @@
 package com.hunter.job.domain;
 
+import com.hunter.job.dto.CandidatDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -24,8 +25,14 @@ public class Candidat{
 
     private String prenom;
 
-    public Candidat(String nom, String prenom) {
-        this.nom = nom;
-        this.prenom = prenom;
+    private String telephone;
+
+    private String email;
+
+    public Candidat(CandidatDto candidatDto) {
+        this.nom = candidatDto.getNom();
+        this.prenom = candidatDto.getPrenom();
+        this.email = candidatDto.getEmail();
+        this.telephone = candidatDto.getTelephone();
     }
 }

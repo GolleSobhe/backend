@@ -6,10 +6,9 @@ import com.hunter.job.services.CandidatService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 /**
  * Created by telly on 28/01/18.
@@ -24,8 +23,14 @@ public class CandidatController{
 
     @PostMapping(value = "/new")
     @ApiOperation(value = "enregistrer un candidat")
-    public Candidat save(@RequestBody CandidatDto candidatDto){
-        Candidat candidat = new Candidat(candidatDto.getNom(),candidatDto.getPrenom());
+    public Candidat save(@Valid @RequestBody CandidatDto candidatDto){
+        Candidat candidat = new Candidat(candidatDto);
         return candidatService.save(candidat);
+    }
+
+    @GetMapping(value = "/{id}")
+    @ApiOperation(value = "rechercher un candidat")
+    public Candidat getById(@PathVariable Long id){
+        return candidatService.findById(id);
     }
 }
