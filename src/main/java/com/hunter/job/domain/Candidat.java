@@ -25,14 +25,11 @@ public class Candidat{
 
     private String prenom;
 
-    private String telephone;
-
     private String email;
 
     public Candidat(CandidatDto candidatDto) {
         this.nom = candidatDto.getNom();
         this.prenom = candidatDto.getPrenom();
         this.email = candidatDto.getEmail();
-        this.telephone = candidatDto.getTelephone();
     }
 }

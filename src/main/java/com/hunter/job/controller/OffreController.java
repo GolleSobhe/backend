@@ -8,6 +8,8 @@ import com.hunter.job.services.OffreService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -66,6 +68,12 @@ public class OffreController{
     @GetMapping(value = "/all")
     public List<Offre> getAll(){
         return offreService.findOffres();
+    }
+
+    @ApiOperation(value = "recuperer toutes les offres par page")
+    @GetMapping(value = "")
+    public Page<Offre> getByPage(Pageable pageable){
+        return offreService.findByPage(pageable);
     }
 
 }
