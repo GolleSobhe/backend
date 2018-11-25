@@ -40,7 +40,6 @@ public class OffreRepository{
         if(content.size() != 0 && pageable.getPageSize() > content.size()){
             return new PageImpl<>(content,pageable,pageable.getOffset()+content.size());
         }
-        System.out.println(getSize());
         return new PageImpl<>(content,pageable,getSize());
     }
 

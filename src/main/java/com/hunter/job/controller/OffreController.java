@@ -9,6 +9,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
@@ -72,7 +73,9 @@ public class OffreController{
 
     @ApiOperation(value = "recuperer toutes les offres par page")
     @GetMapping(value = "")
-    public Page<Offre> getByPage(Pageable pageable){
+    public Page<Offre> getByPage(@RequestParam(value = "pageNumber") int pageNumber,
+                                 @RequestParam(value = "pageSize") int pageSize){
+        PageRequest pageable = new PageRequest(pageNumber,pageSize);
         return offreService.findByPage(pageable);
     }
 
