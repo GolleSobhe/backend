@@ -36,6 +36,12 @@ public class OffreController{
         return offreService.save(offre);
     }
 
+    @ApiOperation(value = "Retourne une offre")
+    @GetMapping(value = "{id}")
+    public Offre findById(@PathVariable Long id){
+        return this.offreService.findById(id);
+    }
+
     @ApiOperation(value = "recuperer les competences")
     @GetMapping(value = "/competences")
     public List<String> getCompetences(){
