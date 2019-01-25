@@ -52,7 +52,7 @@ public class InitialisationService {
 
         competences = new ArrayList<>();
         competences.add("Efficace");
-        dto = new OffreDto("Comptable","gerer l'argent",111000L,"Conakry","Manager",
+        dto = new OffreDto("Comptable","gWelcome to Angular! Angular helps you build modern applications for the web, mobile, or desktop. This guide shows you how to build and run a simple Angular app. You'll use the Angular CLI tool to accelerate developmenterer l'argent",111000L,"Conakry","Manager",
                 "Eau",5,competences,TypeContrat.CDI);
         Offre segComptable = new Offre(dto,seg);
 
@@ -61,7 +61,7 @@ public class InitialisationService {
 
         competences = new ArrayList<>();
         competences.add("Java");
-        dto = new OffreDto("Developpeur","coder",1000L,"Conakry","bon",
+        dto = new OffreDto("Developpeur","codWelcome to Angular! Angular helps you build modern applications for the web, mobile, or desktop. This guide shows you how to build and run a simple Angular app. You'll use the Angular CLI tool to accelerate developmenter",1000L,"Conakry","bon",
                 "mines",3, competences,TypeContrat.CDD);
         cbgInformaticien = new Offre(dto,cbg);
 
@@ -76,7 +76,7 @@ public class InitialisationService {
 
         competences = new ArrayList<>();
         competences.add("Java");
-        dto = new OffreDto("Developpeur","coder",1000L,"Conakry","bon",
+        dto = new OffreDto("Developpeur","Welcome to Angular! Angular helps you build modern applications for the web, mobile, or desktop. This guide shows you how to build and run a simple Angular app. You'll use the Angular CLI tool to accelerate development",1000L,"Conakry","bon",
                 "mines",3, competences,TypeContrat.CDD);
         cbgInformaticien = new Offre(dto,cbg);
 
@@ -91,7 +91,7 @@ public class InitialisationService {
 
         competences = new ArrayList<>();
         competences.add("Java");
-        dto = new OffreDto("Developpeur","coder",1000L,"Conakry","bon",
+        dto = new OffreDto("Developpeur","Welcome to Angular! Angular helps you build modern applications for the web, mobile, or desktop. This guide shows you how to build and run a simple Angular app. You'll use the Angular CLI tool to accelerate development",1000L,"Conakry","bon",
                 "mines",3, competences,TypeContrat.CDD);
         cbgInformaticien = new Offre(dto,cbg);
 
