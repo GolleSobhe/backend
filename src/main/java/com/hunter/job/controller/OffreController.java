@@ -71,6 +71,13 @@ public class OffreController{
         return Arrays.asList(secteurs);
     }
 
+    @ApiOperation(value = "recuperer les specialisations")
+    @GetMapping(value = "/typesContrat")
+    public List<String> getTypesContrat(){
+        String[] typesContrat = new String[] {"CDI", "CDD", "Apprentissage", "Stage", "Interim", "Freelance"};
+        return Arrays.asList(typesContrat);
+    }
+
     @ApiOperation(value = "recuperer toutes les offres")
     @GetMapping(value = "/all")
     public List<Offre> getAll(){
