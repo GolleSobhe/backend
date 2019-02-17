@@ -19,7 +19,7 @@ public class OffreService {
 
     public Offre save(Offre offre){
         if(offre == null)
-            throw new IllegalArgumentException("L'offre ne doit pas etre null");
+            throw new IllegalArgumentException("L'offre ne doit pas etre nulle");
        return offreRepository.save(offre);
     }
 
