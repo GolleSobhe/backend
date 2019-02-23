@@ -81,7 +81,7 @@ public class OffreRepository{
     private Page<Offre> createPageWithQueries(TypedQuery<Offre> selectQuery,Query sizeQuery,Pageable pageable){
         List<Offre> offres = selectQuery.getResultList();
         if(offres.size() != 0 && pageable.getPageSize() > offres.size()){
-            return new PageImpl<>(offres,pageable,pageable.getOffset()+offres.size());
+            return new PageImpl<>(offres,pageable,(long) pageable.getOffset()+offres.size());
         }
         return new PageImpl<>(offres,pageable,getSizeWithQuery(sizeQuery));
     }
