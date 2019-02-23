@@ -3,7 +3,6 @@ package com.hunter.job.repositories;
 import com.hunter.job.domain.Offre;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 

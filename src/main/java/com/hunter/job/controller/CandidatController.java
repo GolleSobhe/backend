@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.websocket.server.PathParam;
 
 /**
  * Created by telly on 28/01/18.
@@ -26,6 +27,12 @@ public class CandidatController{
     public Candidat save(@Valid @RequestBody CandidatDto candidatDto){
         Candidat candidat = new Candidat(candidatDto);
         return candidatService.save(candidat);
+    }
+
+    @GetMapping(value = "/verification/{token}")
+    @ApiOperation(value = "valider un candidat")
+    public String validerCandidat(@PathVariable String token){
+        return  candidatService.validateCandidat(token);
     }
 
     @GetMapping(value = "/{id}")

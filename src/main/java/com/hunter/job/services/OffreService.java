@@ -44,7 +44,6 @@ public class OffreService {
         return  offreRepository.findByLieuAndTitre(lieu,titre,pageable);
     }
 
-
     public Offre findById(Long offreId) {
         return offreRepository.findById(offreId);
     }

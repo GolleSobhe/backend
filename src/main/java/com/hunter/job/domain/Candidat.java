@@ -27,9 +27,16 @@ public class Candidat{
 
     private String email;
 
+    private boolean estValide;
+
     public Candidat(CandidatDto candidatDto) {
         this.nom = candidatDto.getNom();
         this.prenom = candidatDto.getPrenom();
         this.email = candidatDto.getEmail();
+        estValide = false;
+    }
+
+    public  void validerCandidat(){
+        estValide = true;
     }
 }
