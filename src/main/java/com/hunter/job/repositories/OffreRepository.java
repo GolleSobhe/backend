@@ -26,29 +26,69 @@ public class OffreRepository{
         return offre;
     }
 
+    public Offre findById(Long offreId) {
+        return entityManager.find(Offre.class,offreId);
+    }
+
     public List<Offre> findAll(){
         TypedQuery<Offre> query = entityManager.createQuery("select o from Offre o",Offre.class);
         return query.getResultList();
     }
 
-
     public Page<Offre> findByPage(Pageable pageable){
-        TypedQuery<Offre> query = entityManager.createQuery("select o from Offre o",Offre.class);
-        query.setFirstResult(pageable.getOffset());
-        query.setMaxResults(pageable.getPageSize());
-        List<Offre> content = query.getResultList();
-        if(content.size() != 0 && pageable.getPageSize() > content.size()){
-            return new PageImpl<>(content,pageable,pageable.getOffset()+content.size());
-        }
-        return new PageImpl<>(content,pageable,getSize());
+        String sqlQuery = "select o from Offre o";
+        TypedQuery<Offre> selectQuery = createSelectQueryWithSqlAndPageable(sqlQuery,pageable);
+        Query sizeQuery = entityManager.createQuery("select count(*) from Offre o");
+        return createPageWithQueries(selectQuery,sizeQuery,pageable);
     }
 
-    private Long getSize(){
-        Query query = entityManager.createQuery("select count(*) from Offre o");
+    public Page<Offre> findByLieu(String lieu,Pageable pageable){
+        String sqlQuery = "select o from Offre o where o.lieu =:lieu";
+        TypedQuery<Offre> selectQuery = createSelectQueryWithSqlAndPageable(sqlQuery,pageable);
+        selectQuery.setParameter("lieu",lieu);
+        Query sizeQuery = entityManager.createQuery("select count(*) from Offre o where o.lieu =:lieu");
+        sizeQuery.setParameter("lieu",lieu);
+        return createPageWithQueries(selectQuery,sizeQuery,pageable);
+    }
+
+    public Page<Offre> findByTitre(String titre,Pageable pageable){
+        String sqlQuery = "select o from Offre o where o.titre =:titre";
+        TypedQuery<Offre> selectQuery = createSelectQueryWithSqlAndPageable(sqlQuery,pageable);
+        selectQuery.setParameter("titre",titre);
+        Query sizeQuery = entityManager.createQuery("select count(*) from Offre o where o.titre =:titre");
+        sizeQuery.setParameter("titre",titre);
+        return createPageWithQueries(selectQuery,sizeQuery,pageable);
+    }
+
+    public Page<Offre> findByLieuAndTitre(String lieu,String titre,Pageable pageable){
+        String sqlQuery = "select o from Offre o where o.lieu =:lieu and o.titre =:titre";
+        TypedQuery<Offre> selectQuery = createSelectQueryWithSqlAndPageable(sqlQuery,pageable);
+        selectQuery.setParameter("lieu",lieu);
+        selectQuery.setParameter("titre",titre);
+        Query sizeQuery = entityManager.createQuery("select count(*) from Offre o where o.lieu =:lieu and o.titre =:titre");
+        sizeQuery.setParameter("lieu",lieu);
+        sizeQuery.setParameter("titre",titre);
+        return createPageWithQueries(selectQuery,sizeQuery,pageable);
+    }
+
+    private TypedQuery<Offre> createSelectQueryWithSqlAndPageable(String sqlQuery,Pageable pageable){
+        TypedQuery<Offre> selectQuery = entityManager.createQuery(sqlQuery,Offre.class);
+        selectQuery.setFirstResult(pageable.getOffset());
+        selectQuery.setMaxResults(pageable.getPageSize());
+        return selectQuery;
+    }
+
+    private Page<Offre> createPageWithQueries(TypedQuery<Offre> selectQuery,Query sizeQuery,Pageable pageable){
+        List<Offre> offres = selectQuery.getResultList();
+        if(offres.size() != 0 && pageable.getPageSize() > offres.size()){
+            return new PageImpl<>(offres,pageable,pageable.getOffset()+offres.size());
+        }
+        return new PageImpl<>(offres,pageable,getSizeWithQuery(sizeQuery));
+    }
+
+    private Long getSizeWithQuery(Query query){
         return (Long) query.getSingleResult();
     }
 
-    public Offre findById(Long offreId) {
-        return entityManager.find(Offre.class,offreId);
-    }
+
 }

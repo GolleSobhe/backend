@@ -23,7 +23,7 @@ public class OffreService {
        return offreRepository.save(offre);
     }
 
-    public List<Offre> findOffres(){
+    public List<Offre> findAll(){
         return offreRepository.findAll();
     }
 
@@ -31,6 +31,19 @@ public class OffreService {
     public Page<Offre> findByPage(Pageable pageable){
         return offreRepository.findByPage(pageable);
     }
+
+    public Page<Offre> findByLieu(String lieu,Pageable pageable){
+        return  offreRepository.findByLieu(lieu,pageable);
+    }
+
+    public Page<Offre> findByTitre(String titre,Pageable pageable){
+        return  offreRepository.findByTitre(titre,pageable);
+    }
+
+    public Page<Offre> findByLieuAndTitre(String lieu,String titre,Pageable pageable){
+        return  offreRepository.findByLieuAndTitre(lieu,titre,pageable);
+    }
+
 
     public Offre findById(Long offreId) {
         return offreRepository.findById(offreId);

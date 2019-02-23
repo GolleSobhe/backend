@@ -46,7 +46,7 @@ public class InitialisationService {
     private void initOffres(){
         List<String> competences = new ArrayList<>();
         competences.add("Java");
-        OffreDto dto = new OffreDto("Developpeur","coder",1000L,"Conakry","bon",
+        OffreDto dto = new OffreDto("Developpeur","coder",1000L,"Labe","bon",
                 "mines",3, competences,TypeContrat.CDD);
         Offre cbgInformaticien = new Offre(dto,cbg);
 
@@ -67,7 +67,7 @@ public class InitialisationService {
 
         competences = new ArrayList<>();
         competences.add("Efficace");
-        dto = new OffreDto("Comptable","gerer l'argent",111000L,"Conakry","Manager",
+        dto = new OffreDto("Comptable","gerer l'argent",111000L,"Labe","Manager",
                 "Eau",5,competences,TypeContrat.CDI);
         segComptable = new Offre(dto,seg);
 
@@ -82,7 +82,7 @@ public class InitialisationService {
 
         competences = new ArrayList<>();
         competences.add("Efficace");
-        dto = new OffreDto("Comptable","gerer l'argent",111000L,"Conakry","Manager",
+        dto = new OffreDto("Comptable","gerer l'argent",111000L,"Labe","Manager",
                 "Eau",5,competences,TypeContrat.CDI);
         segComptable = new Offre(dto,seg);
 
@@ -97,7 +97,7 @@ public class InitialisationService {
 
         competences = new ArrayList<>();
         competences.add("Efficace");
-        dto = new OffreDto("Comptable","gerer l'argent",111000L,"Conakry","Manager",
+        dto = new OffreDto("Comptable","gerer l'argent",111000L,"Labe","Manager",
                 "Eau",5,competences,TypeContrat.CDI);
         segComptable = new Offre(dto,seg);
 

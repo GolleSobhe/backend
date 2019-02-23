@@ -10,7 +10,6 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -40,6 +39,47 @@ public class OffreController{
     @GetMapping(value = "{id}")
     public Offre findById(@PathVariable Long id){
         return this.offreService.findById(id);
+    }
+
+    @ApiOperation(value = "recuperer toutes les offres")
+    @GetMapping(value = "/all")
+    public List<Offre> getAll(){
+        return offreService.findAll();
+    }
+
+    @ApiOperation(value = "recuperer toutes les offres par page")
+    @GetMapping(value = "")
+    public Page<Offre> getAllByPage(@RequestParam(value = "pageNumber") int pageNumber,
+                                    @RequestParam(value = "pageSize") int pageSize){
+        PageRequest page = new PageRequest(pageNumber,pageSize);
+        return offreService.findByPage(page);
+    }
+
+    @ApiOperation(value = "recuperer toutes les offres par Lieu par page")
+    @GetMapping(value = "/lieu/{lieu}")
+    public Page<Offre> getByLieu(@PathVariable String lieu,
+                                 @RequestParam(value = "pageNumber") int pageNumber,
+                                 @RequestParam(value = "pageSize") int pageSize){
+        PageRequest page = new PageRequest(pageNumber,pageSize);
+        return offreService.findByLieu(lieu,page);
+    }
+
+    @ApiOperation(value = "recuperer toutes les offres par Titre par page")
+    @GetMapping(value = "/titre/{titre}")
+    public Page<Offre> getBySpecialisation(@PathVariable String titre,
+                                 @RequestParam(value = "pageNumber") int pageNumber,
+                                 @RequestParam(value = "pageSize") int pageSize){
+        PageRequest page = new PageRequest(pageNumber,pageSize);
+        return offreService.findByTitre(titre,page);
+    }
+
+    @ApiOperation(value = "recuperer toutes les offres par Lieu et Titre par page")
+    @GetMapping(value = "/lieu/{lieu}/titre/{titre}")
+    public Page<Offre> getByLieuAndSpecialisation(@PathVariable String lieu,@PathVariable String titre,
+                                           @RequestParam(value = "pageNumber") int pageNumber,
+                                           @RequestParam(value = "pageSize") int pageSize){
+        PageRequest page = new PageRequest(pageNumber,pageSize);
+        return offreService.findByLieuAndTitre(lieu,titre,page);
     }
 
     @ApiOperation(value = "recuperer les competences")
@@ -78,18 +118,6 @@ public class OffreController{
         return Arrays.asList(typesContrat);
     }
 
-    @ApiOperation(value = "recuperer toutes les offres")
-    @GetMapping(value = "/all")
-    public List<Offre> getAll(){
-        return offreService.findOffres();
-    }
 
-    @ApiOperation(value = "recuperer toutes les offres par page")
-    @GetMapping(value = "")
-    public Page<Offre> getByPage(@RequestParam(value = "pageNumber") int pageNumber,
-                                 @RequestParam(value = "pageSize") int pageSize){
-        PageRequest pageable = new PageRequest(pageNumber,pageSize);
-        return offreService.findByPage(pageable);
-    }
 
 }
