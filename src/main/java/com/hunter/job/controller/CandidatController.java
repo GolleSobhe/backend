@@ -18,13 +18,14 @@ import org.springframework.http.ResponseEntity;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.List;
 
 
 /**
  * Created by telly on 28/01/18.
  */
 @RestController
-@RequestMapping("/candidat")
+@RequestMapping("/api/v1")
 @Api(description = "Controleur pour les candidats")
 public class CandidatController{
 
@@ -34,11 +35,16 @@ public class CandidatController{
     @Autowired
     private FileStorageService fileStorageService;
 
-    @PostMapping(value = "/new")
+    @PostMapping(value = "/candidats")
     @ApiOperation(value = "enregistrer un candidat")
-    public Candidat save(@Valid @RequestBody CandidatDto candidatDto){
-        Candidat candidat = new Candidat(candidatDto);
+    public Candidat save(@Valid @RequestBody Candidat candidat){
         return candidatService.save(candidat);
+    }
+
+    @RequestMapping(value = "/candidats/{id}", method = RequestMethod.PUT)
+    @ApiOperation(value = "enregistrer un candidat")
+    public Candidat update(@PathVariable("id") Long id, @Valid @RequestBody Candidat candidat){
+        return candidatService.update(id, candidat);
     }
 
     @GetMapping(value = "/verification/{token}")
@@ -71,9 +77,15 @@ public class CandidatController{
                 .body(resource);
     }
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/candidats")
+    @ApiOperation(value = "rechercher tous les candidats")
+    public List<Candidat> findAll(){
+        return candidatService.findAll();
+    }
+
+    @GetMapping(value = "/candidats/{id}")
     @ApiOperation(value = "rechercher un candidat")
-    public Candidat getById(@PathVariable Long id){
+    public Candidat findById(@PathVariable Long id){
         return candidatService.findById(id);
     }
 }

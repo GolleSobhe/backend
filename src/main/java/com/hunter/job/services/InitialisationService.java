@@ -39,7 +39,7 @@ public class InitialisationService {
     public void init(){
         initEntreprises();
         initOffres();
-        initCandidat();
+        initCandidats();
     }
 
     private void initEntreprises(){
@@ -3983,10 +3983,11 @@ public class InitialisationService {
         offreRepository.save(segComptable);
     }
 
-    private void initCandidat() {
-        toto = new Candidat("toto", "TOTO", "6436008574", "toto@yahoo.fr");
-        tata = new Candidat("tata", "TATA", "6436008574", "tata@yahoo.fr");
+    private void initCandidats(){
+        toto = new Candidat("totot", "TOTO", "toto@gmail.com");
+        tata = new Candidat("tata", "TATA", "tata@net.fr");
         candidatService.save(toto);
         candidatService.save(tata);
     }
+
 }
