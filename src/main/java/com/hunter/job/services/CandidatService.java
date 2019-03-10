@@ -41,18 +41,18 @@ public class CandidatService {
         return "good";
     }
 
-    public Candidat save(Candidat candidat){
+    public Candidat save(Candidat candidat,String url){
         Candidat savedCandidat = candidatRepository.save(candidat);
-        sendConfirmationEmail(savedCandidat);
+        sendConfirmationEmail(savedCandidat,url);
         return savedCandidat;
     }
 
-    private void sendConfirmationEmail(Candidat candidat){
+    private void sendConfirmationEmail(Candidat candidat,String url){
         String token = UUID.randomUUID().toString();
         LocalDateTime dateExpirationToken = LocalDateTime.now().plusDays(1);
         VerificationToken verificationToken = new VerificationToken(token,dateExpirationToken,candidat);
         VerificationToken savedToken = verificationTokenRepository.save(verificationToken);
-        mailService.sendVerificationEmail(savedToken.getToken(),candidat.getEmail());
+        mailService.sendVerificationEmail(url,savedToken.getToken(),candidat.getEmail());
     }
 
 

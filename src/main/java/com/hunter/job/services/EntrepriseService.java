@@ -19,38 +19,24 @@ import java.util.List;
 @Transactional
 public class EntrepriseService {
 
-    @PersistenceContext
-    private EntityManager entityManager;
+    @Autowired
+    EntrepriseRepository entrepriseRepository;
 
     public Entreprise save(Entreprise entreprise){
-        this.entityManager.persist(entreprise);
-        return entreprise;
+       return  entrepriseRepository.save(entreprise);
     }
 
     public List<Entreprise> findAll() {
-        Query query = this.entityManager.createQuery("SELECT entreprise FROM Entreprise entreprise order by entreprise.nom asc ");
-        return (List<Entreprise>) query.getResultList();
+        return entrepriseRepository.findAll();
     }
 
     public Entreprise findById(Long id){
-        return this.entityManager.find(Entreprise.class, id);
+        return entrepriseRepository.findById(id);
     }
 
-    public void remove(Entreprise entreprise) {
-        Entreprise removed = this.entityManager.getReference(Entreprise.class, entreprise.getId());
-    }
 
     public Entreprise update(Entreprise entreprise) {
-        Entreprise update = findById(entreprise.getId());
-        update.setNom(entreprise.getNom());
-        update.setTelephone(entreprise.getTelephone());
-        update.setAdresse(entreprise.getAdresse());
-        update.setEmail(entreprise.getEmail());
-        update.setSiteWeb(entreprise.getSiteWeb());
-        update.setDescription(entreprise.getDescription());
-        update.setSecteurActivite(entreprise.getSecteurActivite());
-        entityManager.flush();
-        return update;
+        return entrepriseRepository.update(entreprise);
     }
 
 }

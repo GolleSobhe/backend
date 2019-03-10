@@ -32,15 +32,14 @@ public class OffreService {
         return offreRepository.findByPage(pageable);
     }
 
-    public Page<Offre> findByLieu(String lieu,Pageable pageable){
-        return  offreRepository.findByLieu(lieu,pageable);
-    }
-
-    public Page<Offre> findByTitre(String titre,Pageable pageable){
-        return  offreRepository.findByTitre(titre,pageable);
-    }
 
     public Page<Offre> findByLieuAndTitre(String lieu,String titre,Pageable pageable){
+        if(lieu != null && titre == null){
+            return offreRepository.findByLieu(lieu,pageable);
+        }
+        if(titre != null && lieu == null){
+            return offreRepository.findByTitre(titre,pageable);
+        }
         return  offreRepository.findByLieuAndTitre(lieu,titre,pageable);
     }
 

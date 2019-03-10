@@ -3984,9 +3984,6 @@ public class InitialisationService {
     }
 
     private void initCandidat() {
-        toto = new Candidat("toto", "TOTO", "6436008574", "toto@yahoo.fr");
-        tata = new Candidat("tata", "TATA", "6436008574", "tata@yahoo.fr");
-        candidatService.save(toto);
-        candidatService.save(tata);
+
     }
 }

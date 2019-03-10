@@ -11,14 +11,13 @@ public class MailService {
     @Autowired
     private JavaMailSender mailSender;
 
-    public void sendVerificationEmail(String token ,String email){
-        System.out.println("sending "+token + " to "+email);
+    public void sendVerificationEmail(String url,String token ,String email){
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setSubject("Confirmation Inscription");
+        message.setSubject("Confirmer votre inscription sur GolleSobhe");
         message.setTo(email);
-        String urlVerification = "http://localhost:8080/user/verification/"+token;
+        String urlVerification = url+token;
         message.setText(urlVerification);
-        //mailSender.send(message);
+        mailSender.send(message);
     }
 
 }

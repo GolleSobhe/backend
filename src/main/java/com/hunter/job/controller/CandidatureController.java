@@ -18,8 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
  * Created by telly on 28/10/18.
  */
 @RestController
-@RequestMapping(value = "/candidature")
-@Api(description = "Controller pour les candidatures")
+@RequestMapping(value = "/api/v1/candidatures")
 public class CandidatureController {
 
     @Autowired
@@ -32,8 +31,9 @@ public class CandidatureController {
     OffreService offreService;
 
     @ApiOperation(value = "enregistrer une candidature a une offre")
-    @PostMapping(value = "/new")
-    public Candidature save(@RequestParam(value = "offre_id") Long offreId,@RequestParam(value = "candidat_id") Long candidatId){
+    @PostMapping(value = "/")
+    public Candidature save(@RequestParam(value = "offre_id") Long offreId,
+                            @RequestParam(value = "candidat_id") Long candidatId){
         Candidat candidat = candidatService.findById(candidatId);
         Offre offre = offreService.findById(offreId);
         Candidature candidature = new Candidature();

@@ -5,7 +5,6 @@ import com.hunter.job.dto.CandidatDto;
 import com.hunter.job.exception.FileStorageException;
 import com.hunter.job.services.CandidatService;
 import com.hunter.job.services.FileStorageService;
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -24,9 +23,10 @@ import java.io.IOException;
  * Created by telly on 28/01/18.
  */
 @RestController
-@RequestMapping("/candidat")
-@Api(description = "Controleur pour les candidats")
+@RequestMapping("/api/v1/candidats")
 public class CandidatController{
+
+    private static final String CV_PATH = "./src/main/resources/cv";
 
     @Autowired
     private CandidatService candidatService;
@@ -34,11 +34,20 @@ public class CandidatController{
     @Autowired
     private FileStorageService fileStorageService;
 
-    @PostMapping(value = "/new")
+    @PostMapping(value = "/")
     @ApiOperation(value = "enregistrer un candidat")
-    public Candidat save(@Valid @RequestBody CandidatDto candidatDto){
+    public Candidat save(@Valid @RequestBody CandidatDto candidatDto,HttpServletRequest request){
+        String rootUrl = getBaseUrlFromRequest(request);
+        String url = rootUrl+"/api/v1/candidats/verification/";
         Candidat candidat = new Candidat(candidatDto);
-        return candidatService.save(candidat);
+        return candidatService.save(candidat,url);
+    }
+
+
+    @GetMapping(value = "/{id}")
+    @ApiOperation(value = "rechercher un candidat")
+    public Candidat getById(@PathVariable Long id){
+        return candidatService.findById(id);
     }
 
     @GetMapping(value = "/verification/{token}")
@@ -47,18 +56,16 @@ public class CandidatController{
         return  candidatService.validateCandidat(token);
     }
 
-    @PostMapping(value = "/cv/{id}")
+    @PostMapping(value = "/{id}/cv")
     @ApiOperation(value = "enregistrer le cv d'un candidat")
     public  void enregisterCv(@PathVariable String id,@RequestParam("file") MultipartFile file) throws FileStorageException {
-        String path = "./src/main/resources/cv";
-        fileStorageService.storeFile(file,id,path);
+        fileStorageService.storeFile(file,id,CV_PATH);
     }
 
-    @GetMapping(value = "/cv/{id}")
+    @GetMapping(value = "/{id}/cv")
     @ApiOperation(value = "recuperer le cv d'un candidat")
     public  ResponseEntity<Resource> recupererCv(@PathVariable String id, HttpServletRequest request) throws FileStorageException {
-        String path = "./src/main/resources/cv";
-        Resource resource = fileStorageService.retrieveFile(id,path);
+        Resource resource = fileStorageService.retrieveFile(id,CV_PATH);
         String contentType = null;
         try {
              contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
@@ -71,9 +78,9 @@ public class CandidatController{
                 .body(resource);
     }
 
-    @GetMapping(value = "/{id}")
-    @ApiOperation(value = "rechercher un candidat")
-    public Candidat getById(@PathVariable Long id){
-        return candidatService.findById(id);
+
+
+    private String getBaseUrlFromRequest(HttpServletRequest request) {
+        return request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
     }
 }

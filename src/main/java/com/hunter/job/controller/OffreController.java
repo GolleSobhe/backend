@@ -17,8 +17,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/offre")
-@Api(description = "Controller pour les offres")
+@RequestMapping(value = "/api/v1/offres")
 public class OffreController{
 
     @Autowired
@@ -28,7 +27,7 @@ public class OffreController{
     private EntrepriseService entrepriseService;
 
     @ApiOperation(value = "enregistrer une offre d'une entreprise")
-    @PostMapping(value = "/new")
+    @PostMapping(value = "/")
     public Offre save(@RequestParam(value = "entreprise_id") Long entrepriseId, @Valid @RequestBody OffreDto offreDto){
         Entreprise entreprise = entrepriseService.findById(entrepriseId);
         Offre offre = new Offre(offreDto,entreprise);
@@ -36,7 +35,7 @@ public class OffreController{
     }
 
     @ApiOperation(value = "Retourne une offre")
-    @GetMapping(value = "{id}")
+    @GetMapping(value = "/{id}")
     public Offre findById(@PathVariable Long id){
         return this.offreService.findById(id);
     }
@@ -48,34 +47,17 @@ public class OffreController{
     }
 
     @ApiOperation(value = "recuperer toutes les offres par page")
-    @GetMapping(value = "")
+    @GetMapping(value = "/")
     public Page<Offre> getAllByPage(@RequestParam(value = "pageNumber") int pageNumber,
                                     @RequestParam(value = "pageSize") int pageSize){
         PageRequest page = new PageRequest(pageNumber,pageSize);
         return offreService.findByPage(page);
     }
 
-    @ApiOperation(value = "recuperer toutes les offres par Lieu par page")
-    @GetMapping(value = "/lieu/{lieu}")
-    public Page<Offre> getByLieu(@PathVariable String lieu,
-                                 @RequestParam(value = "pageNumber") int pageNumber,
-                                 @RequestParam(value = "pageSize") int pageSize){
-        PageRequest page = new PageRequest(pageNumber,pageSize);
-        return offreService.findByLieu(lieu,page);
-    }
-
-    @ApiOperation(value = "recuperer toutes les offres par Titre par page")
-    @GetMapping(value = "/titre/{titre}")
-    public Page<Offre> getBySpecialisation(@PathVariable String titre,
-                                 @RequestParam(value = "pageNumber") int pageNumber,
-                                 @RequestParam(value = "pageSize") int pageSize){
-        PageRequest page = new PageRequest(pageNumber,pageSize);
-        return offreService.findByTitre(titre,page);
-    }
-
     @ApiOperation(value = "recuperer toutes les offres par Lieu et Titre par page")
-    @GetMapping(value = "/lieu/{lieu}/titre/{titre}")
-    public Page<Offre> getByLieuAndSpecialisation(@PathVariable String lieu,@PathVariable String titre,
+    @GetMapping(value = "/filtrer")
+    public Page<Offre> getByLieuAndSpecialisation(@RequestParam (value = "lieu",required = false) String lieu,
+                                                  @RequestParam (value = "titre",required = false) String titre,
                                            @RequestParam(value = "pageNumber") int pageNumber,
                                            @RequestParam(value = "pageSize") int pageSize){
         PageRequest page = new PageRequest(pageNumber,pageSize);
