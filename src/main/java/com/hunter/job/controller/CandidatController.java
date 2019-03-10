@@ -19,6 +19,7 @@ import javax.validation.Valid;
 import java.io.IOException;
 
 
+
 /**
  * Created by telly on 28/01/18.
  */
@@ -36,18 +37,23 @@ public class CandidatController{
 
     @PostMapping(value = "/")
     @ApiOperation(value = "enregistrer un candidat")
-    public Candidat save(@Valid @RequestBody CandidatDto candidatDto,HttpServletRequest request){
+    public Candidat save(@Valid @RequestBody Candidat candidat,HttpServletRequest request){
         String rootUrl = getBaseUrlFromRequest(request);
         String url = rootUrl+"/api/v1/candidats/verification/";
-        Candidat candidat = new Candidat(candidatDto);
         return candidatService.save(candidat,url);
     }
 
 
     @GetMapping(value = "/{id}")
     @ApiOperation(value = "rechercher un candidat")
-    public Candidat getById(@PathVariable Long id){
+    public Candidat getById(@PathVariable Long id) {
         return candidatService.findById(id);
+    }
+
+    @RequestMapping(value = "/", method = RequestMethod.PUT)
+    @ApiOperation(value = "modifie un candidat")
+    public Candidat update(@Valid @RequestBody Candidat candidat){
+        return candidatService.update(candidat.getId(), candidat);
     }
 
     @GetMapping(value = "/verification/{token}")
@@ -79,8 +85,8 @@ public class CandidatController{
     }
 
 
-
-    private String getBaseUrlFromRequest(HttpServletRequest request) {
-        return request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
+    private String getBaseUrlFromRequest(HttpServletRequest request){
+            return request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
     }
+
 }

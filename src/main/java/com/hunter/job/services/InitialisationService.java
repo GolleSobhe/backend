@@ -39,7 +39,6 @@ public class InitialisationService {
     public void init(){
         initEntreprises();
         initOffres();
-        initCandidat();
     }
 
     private void initEntreprises(){
@@ -3983,7 +3982,7 @@ public class InitialisationService {
         offreRepository.save(segComptable);
     }
 
-    private void initCandidat() {
 
-    }
+
+
 }
