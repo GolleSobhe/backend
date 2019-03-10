@@ -1,5 +1,6 @@
 package com.hunter.job.services;
 
+import com.hunter.job.domain.Candidat;
 import com.hunter.job.domain.Entreprise;
 import com.hunter.job.domain.Offre;
 import com.hunter.job.domain.TypeContrat;
@@ -26,21 +27,28 @@ public class InitialisationService {
     @Autowired
     private EntrepriseRepository entrepriseRepository;
 
+    @Autowired
+    private CandidatService candidatService;
+
     private Entreprise cbg;
     private Entreprise seg;
+    private Entreprise fiyaHollo;
+    private Candidat toto;
+    private Candidat tata;
 
     public void init(){
         initEntreprises();
         initOffres();
+        initCandidat();
     }
 
     private void initEntreprises(){
-        EntrepriseDto dto = new EntrepriseDto("CBG","62200000","pamelap","cbg@net.com",null,"compagnie de mines","mine");
-        cbg = new Entreprise(dto);
-        dto = new EntrepriseDto("SEG","62200000","Conakry","seg@net.com",null,"compagnie dee eaux","eaux");
-        seg = new Entreprise(dto);
+        cbg = new Entreprise("CBG", "62200000", "pamelap", "cbg@net.com", "https://fr.pamelap.com/", "compagnie de mines", "Mine");
+        seg = new Entreprise("SEG","62200000","Conakry","seg@net.com","https://fr.seg.com/","compagnie dee eaux","Eaux");
+        fiyaHollo = new Entreprise("fiyaHollo","07458000","Mamou","fiyaHollo@net.com","https://fr.fiyaHollo.com/","Informatique","Informatique");
         entrepriseRepository.save(cbg);
         entrepriseRepository.save(seg);
+        entrepriseRepository.save(fiyaHollo);
     }
 
     private void initOffres(){
@@ -3973,5 +3981,12 @@ public class InitialisationService {
 
         offreRepository.save(cbgInformaticien);
         offreRepository.save(segComptable);
+    }
+
+    private void initCandidat() {
+        toto = new Candidat("toto", "TOTO", "6436008574", "toto@yahoo.fr");
+        tata = new Candidat("tata", "TATA", "6436008574", "tata@yahoo.fr");
+        candidatService.save(toto);
+        candidatService.save(tata);
     }
 }
