@@ -39,7 +39,8 @@ public class CandidatController{
     @ApiOperation(value = "enregistrer un candidat")
     public Candidat save(@Valid @RequestBody Candidat candidat,HttpServletRequest request){
         String rootUrl = getBaseUrlFromRequest(request);
-        String url = rootUrl+"/api/v1/candidats/verification/";
+       // String url = rootUrl+"/api/v1/candidats/verification/";
+        String url = "https://gollesobhe.github.io/hunterJobWeb/";
         return candidatService.save(candidat,url);
     }
 
