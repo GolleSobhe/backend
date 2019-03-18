@@ -40,6 +40,9 @@ public class Candidat{
     @Email
     private String email;
 
+    @NotNull
+    private String motDePasse;
+
     private String telephone;
 
     private String titreProfil;
@@ -64,10 +67,11 @@ public class Candidat{
 
     private boolean estValide = false;
 
-    public Candidat(String nom, String prenom, String email) {
+    public Candidat(String nom, String prenom, String email, String motDePasse) {
         this.nom = nom;
         this.prenom = prenom;
         this.email = email;
+        this.motDePasse = motDePasse;
     }
 
     public  void validerCandidat(){
