@@ -1,7 +1,6 @@
 package com.hunter.job.controller;
 
 import com.hunter.job.domain.Candidat;
-import com.hunter.job.dto.CandidatDto;
 import com.hunter.job.exception.FileStorageException;
 import com.hunter.job.services.CandidatService;
 import com.hunter.job.services.FileStorageService;
