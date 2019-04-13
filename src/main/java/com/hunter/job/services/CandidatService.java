@@ -1,17 +1,13 @@
 package com.hunter.job.services;
 
 import com.hunter.job.domain.Candidat;
-import com.hunter.job.domain.VerificationToken;
+import com.hunter.job.domain.VerificationTokenCandidat;
 import com.hunter.job.repositories.CandidatRepository;
 import com.hunter.job.repositories.VerificationTokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -39,14 +35,14 @@ public class CandidatService {
     }
 
     public String validateCandidat(String token){
-        VerificationToken verificationToken = verificationTokenRepository.findByToken(token);
-        if(verificationToken == null || verificationToken.getDateExpiration().isBefore(LocalDateTime.now())){
+        VerificationTokenCandidat verificationTokenCandidat = verificationTokenRepository.findByToken(token);
+        if(verificationTokenCandidat == null || verificationTokenCandidat.getDateExpiration().isBefore(LocalDateTime.now())){
             return "bad";
         }
-        Candidat candidat = verificationToken.getCandidat();
+        Candidat candidat = verificationTokenCandidat.getCandidat();
         candidat.validerCandidat();
         candidatRepository.save(candidat);
-        verificationTokenRepository.delete(verificationToken);
+        verificationTokenRepository.delete(verificationTokenCandidat);
         return "good";
     }
 
@@ -56,8 +52,10 @@ public class CandidatService {
         return savedCandidat;
     }
 
-    public Candidat update(Long id, Candidat candidat) {
-        Candidat currenCandidat = findById(id);
+
+
+    public Candidat update(Candidat candidat) {
+        Candidat currenCandidat = findById(candidat.getId());
         currenCandidat.setNom(candidat.getNom());
         currenCandidat.setPrenom(candidat.getPrenom());
         currenCandidat.setEmail(candidat.getEmail());
@@ -75,14 +73,18 @@ public class CandidatService {
         currenCandidat.setApprentissage(candidat.getApprentissage());
         currenCandidat.setProfessionnalisation(candidat.getProfessionnalisation());
         currenCandidat.setFreelance(candidat.getFreelance());
-        return  candidatRepository.save(candidat);
+        return  candidatRepository.update(currenCandidat);
+    }
+
+    public List<Candidat> findAll() {
+        return candidatRepository.findAll();
     }
 
     private void sendConfirmationEmail(Candidat candidat,String url){
         String token = UUID.randomUUID().toString();
         LocalDateTime dateExpirationToken = LocalDateTime.now().plusDays(1);
-        VerificationToken verificationToken = new VerificationToken(token,dateExpirationToken,candidat);
-        VerificationToken savedToken = verificationTokenRepository.save(verificationToken);
+        VerificationTokenCandidat verificationTokenCandidat = new VerificationTokenCandidat(token,dateExpirationToken,candidat);
+        VerificationTokenCandidat savedToken = verificationTokenRepository.save(verificationTokenCandidat);
         mailService.sendVerificationEmail(url,savedToken.getToken(),candidat.getEmail());
     }
 

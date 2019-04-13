@@ -17,14 +17,15 @@ import org.springframework.http.ResponseEntity;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.IOException;
-
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
  * Created by telly on 28/01/18.
  */
 @RestController
-@RequestMapping("/api/v1/candidats")
+@RequestMapping("/api/v1")
 public class CandidatController{
 
     private static final String CV_PATH = "./src/main/resources/cv";
@@ -35,7 +36,7 @@ public class CandidatController{
     @Autowired
     private FileStorageService fileStorageService;
 
-    @PostMapping(value = "/")
+    @PostMapping(value = "/candidats/")
     @ApiOperation(value = "enregistrer un candidat")
     public Candidat save(@Valid @RequestBody Candidat candidat,HttpServletRequest request){
         String rootUrl = getBaseUrlFromRequest(request);
@@ -45,31 +46,31 @@ public class CandidatController{
     }
 
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/candidats/{id}")
     @ApiOperation(value = "rechercher un candidat")
     public Candidat getById(@PathVariable Long id) {
         return candidatService.findById(id);
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.PUT)
-    @ApiOperation(value = "modifie un candidat")
+    @RequestMapping(value = "/candidats", method = RequestMethod.PUT)
+    @ApiOperation(value = "enregistrer un candidat")
     public Candidat update(@Valid @RequestBody Candidat candidat){
-        return candidatService.update(candidat.getId(), candidat);
+        return candidatService.update(candidat);
     }
 
-    @GetMapping(value = "/verification/{token}")
+    @GetMapping(value = "/candidats/verification/{token}")
     @ApiOperation(value = "valider un candidat")
     public String validerCandidat(@PathVariable String token){
         return  candidatService.validateCandidat(token);
     }
 
-    @PostMapping(value = "/{id}/cv")
+    @PostMapping(value = "/candidats/{id}/cv")
     @ApiOperation(value = "enregistrer le cv d'un candidat")
     public  void enregisterCv(@PathVariable String id,@RequestParam("file") MultipartFile file) throws FileStorageException {
         fileStorageService.storeFile(file,id,CV_PATH);
     }
 
-    @GetMapping(value = "/{id}/cv")
+    @GetMapping(value = "/candidats/{id}/cv")
     @ApiOperation(value = "recuperer le cv d'un candidat")
     public  ResponseEntity<Resource> recupererCv(@PathVariable String id, HttpServletRequest request) throws FileStorageException {
         Resource resource = fileStorageService.retrieveFile(id,CV_PATH);
@@ -88,6 +89,12 @@ public class CandidatController{
 
     private String getBaseUrlFromRequest(HttpServletRequest request){
             return request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
+    }
+
+    @GetMapping(value = "/candidats")
+    @ApiOperation(value = "rechercher tous les candidats")
+    public List<Candidat> findAll(){
+        return candidatService.findAll();
     }
 
 }

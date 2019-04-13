@@ -1,7 +1,6 @@
 package com.hunter.job.repositories;
 
-import com.hunter.job.domain.Offre;
-import com.hunter.job.domain.VerificationToken;
+import com.hunter.job.domain.VerificationTokenCandidat;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -17,17 +16,17 @@ public class VerificationTokenRepository {
     @PersistenceContext
     private EntityManager entityManager;
 
-    public VerificationToken save(VerificationToken verificationToken){
-        entityManager.persist(verificationToken);
-        return  verificationToken;
+    public VerificationTokenCandidat save(VerificationTokenCandidat verificationTokenCandidat){
+        entityManager.persist(verificationTokenCandidat);
+        return verificationTokenCandidat;
     }
 
-    public void delete(VerificationToken verificationToken){
-        entityManager.remove(verificationToken);
+    public void delete(VerificationTokenCandidat verificationTokenCandidat){
+        entityManager.remove(verificationTokenCandidat);
     }
 
-    public VerificationToken findByToken(String token){
-        TypedQuery<VerificationToken> query = entityManager.createQuery("select v from VerificationToken v where token =:token",VerificationToken.class);
+    public VerificationTokenCandidat findByToken(String token){
+        TypedQuery<VerificationTokenCandidat> query = entityManager.createQuery("select v from VerificationTokenCandidat v where token =:token", VerificationTokenCandidat.class);
         query.setParameter("token",token);
         try {
             return  query.getSingleResult();

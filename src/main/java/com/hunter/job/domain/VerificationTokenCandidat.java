@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter @Setter @NoArgsConstructor
-public class VerificationToken {
+public class VerificationTokenCandidat {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,7 +19,7 @@ public class VerificationToken {
     @OneToOne
     private Candidat candidat;
 
-    public VerificationToken(String token,LocalDateTime dateExpiration,Candidat candidat){
+    public VerificationTokenCandidat(String token, LocalDateTime dateExpiration, Candidat candidat){
         this.token = token;
         this.dateExpiration = dateExpiration;
         this.candidat = candidat;
