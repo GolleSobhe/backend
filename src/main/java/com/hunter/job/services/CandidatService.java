@@ -1,7 +1,7 @@
 package com.hunter.job.services;
 
 import com.hunter.job.domain.Candidat;
-import com.hunter.job.domain.VerificationTokenCandidat;
+import com.hunter.job.domain.VerificationToken;
 import com.hunter.job.repositories.CandidatRepository;
 import com.hunter.job.repositories.VerificationTokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +35,7 @@ public class CandidatService {
     }
 
     public String validateCandidat(String token){
-        VerificationTokenCandidat verificationTokenCandidat = verificationTokenRepository.findByToken(token);
+        VerificationToken verificationTokenCandidat = verificationTokenRepository.findByToken(token);
         if(verificationTokenCandidat == null || verificationTokenCandidat.getDateExpiration().isBefore(LocalDateTime.now())){
             return "bad";
         }
@@ -83,8 +83,8 @@ public class CandidatService {
     private void sendConfirmationEmail(Candidat candidat,String url){
         String token = UUID.randomUUID().toString();
         LocalDateTime dateExpirationToken = LocalDateTime.now().plusDays(1);
-        VerificationTokenCandidat verificationTokenCandidat = new VerificationTokenCandidat(token,dateExpirationToken,candidat);
-        VerificationTokenCandidat savedToken = verificationTokenRepository.save(verificationTokenCandidat);
+        VerificationToken verificationTokenCandidat = new VerificationToken(token,dateExpirationToken,candidat);
+        VerificationToken savedToken = verificationTokenRepository.save(verificationTokenCandidat);
         mailService.sendVerificationEmail(url,savedToken.getToken(),candidat.getEmail());
     }
 

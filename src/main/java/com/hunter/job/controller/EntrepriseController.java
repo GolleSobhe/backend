@@ -22,7 +22,7 @@ import java.util.List;
  * Created by telly on 28/01/18.
  */
 @RestController
-@RequestMapping("/api/v1/entreprises")
+@RequestMapping("/api/v1")
 public class EntrepriseController{
 
     private static final String LOGO_PATH = "./src/main/resources/logos";
@@ -33,37 +33,39 @@ public class EntrepriseController{
     @Autowired
     private FileStorageService fileStorageService;
 
-    @GetMapping(value = "/")
+    @GetMapping(value = "/entreprises")
     @ApiOperation(value = "retourne la liste de toutes les entreprises")
     public List<Entreprise> findAll(){
         return entrepriseService.findAll();
     }
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/entreprises/{id}")
     @ApiOperation(value = "retourne une entreprise")
     public Entreprise findById(@PathVariable Long id){
         return entrepriseService.findById(id);
     }
 
-    @PostMapping(value = "/")
+    @PostMapping(value = "/entreprises")
     @ApiOperation(value = "enregistre une entreprise")
-    public Entreprise save(@Valid @RequestBody Entreprise entreprise){
-        return entrepriseService.save(entreprise);
+    public Entreprise save(@Valid @RequestBody Entreprise entreprise, HttpServletRequest request){
+        String rootUrl = getBaseUrlFromRequest(request);
+        String url = "https://gollesobhe.github.io/hunterJobWeb/";
+        return entrepriseService.save(entreprise, url);
     }
 
-    @PutMapping(value = "/")
+    @PutMapping(value = "/entreprises")
     @ApiOperation(value = "modifie une entreprise")
     public Entreprise update(@Valid @RequestBody Entreprise entreprise){
         return entrepriseService.update(entreprise);
     }
 
-    @PostMapping(value = "/{id}/logo")
+    @PostMapping(value = "/entreprises/{id}/logo")
     @ApiOperation(value = "enregistrer le logo d'une entreprise")
     public  void enregisterLogo(@PathVariable String id,@RequestParam("file") MultipartFile file) throws FileStorageException {
         fileStorageService.storeFile(file,id,LOGO_PATH);
     }
 
-    @GetMapping(value = "/{id}/logo")
+    @GetMapping(value = "/entreprises/{id}/logo")
     @ApiOperation(value = "recupere le logo d'une entreprise")
     public  ResponseEntity<Resource> recupererLogo(@PathVariable String id, HttpServletRequest request) throws FileStorageException {
         Resource resource = fileStorageService.retrieveFile(id,LOGO_PATH);
@@ -79,4 +81,13 @@ public class EntrepriseController{
                 .body(resource);
     }
 
+    @GetMapping(value = "/entreprises/verification/{token}")
+    @ApiOperation(value = "valider une entreprise")
+    public String validerEntreprise(@PathVariable String token){
+        return  entrepriseService.validerEntreprise(token);
+    }
+
+    private String getBaseUrlFromRequest(HttpServletRequest request) {
+        return request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
+    }
 }
