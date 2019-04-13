@@ -35,15 +35,7 @@ public class EntrepriseRepository {
     }
 
     public Entreprise update(Entreprise entreprise) {
-        Entreprise update = findById(entreprise.getId());
-        update.setNom(entreprise.getNom());
-        update.setTelephone(entreprise.getTelephone());
-        update.setAdresse(entreprise.getAdresse());
-        update.setEmail(entreprise.getEmail());
-        update.setSiteWeb(entreprise.getSiteWeb());
-        update.setDescription(entreprise.getDescription());
-        update.setSecteurActivite(entreprise.getSecteurActivite());
-        entityManager.flush();
-        return update;
+        entityManager.merge(entreprise);
+        return entreprise;
     }
 }
