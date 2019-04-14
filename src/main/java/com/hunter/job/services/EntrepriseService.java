@@ -31,6 +31,7 @@ public class EntrepriseService {
     private MailService mailService;
 
     public Entreprise save(Entreprise entreprise, String url){
+        entreprise.setId(UUID.randomUUID());
         Entreprise entrepriseSaved = entrepriseRepository.save(entreprise);
         sendConfirmationEmail(entrepriseSaved,url);
         return  entrepriseSaved;

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/api/v1/offres")
@@ -28,7 +29,7 @@ public class OffreController{
 
     @ApiOperation(value = "enregistrer une offre d'une entreprise")
     @PostMapping(value = "/")
-    public Offre save(@RequestParam(value = "entreprise_id") Long entrepriseId, @Valid @RequestBody OffreDto offreDto){
+    public Offre save(@RequestParam(value = "entreprise_id") UUID entrepriseId, @Valid @RequestBody OffreDto offreDto){
         Entreprise entreprise = entrepriseService.findById(entrepriseId);
         Offre offre = new Offre(offreDto,entreprise);
         return offreService.save(offre);

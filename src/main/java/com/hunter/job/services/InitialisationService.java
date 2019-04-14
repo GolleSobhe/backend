@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by telly on 27/05/18.
@@ -41,8 +42,11 @@ public class InitialisationService {
         cbg = new Entreprise("CBG", "62200000", "pamelap", "cbg@net.com", "https://fr.pamelap.com/", "compagnie de mines", "Mine");
         seg = new Entreprise("SEG","62200000","Conakry","seg@net.com","https://fr.seg.com/","compagnie dee eaux","Eaux");
         fiyaHollo = new Entreprise("fiyaHollo","07458000","Mamou","fiyaHollo@net.com","https://fr.fiyaHollo.com/","Informatique","Informatique");
+        cbg.setId(UUID.randomUUID());
         entrepriseRepository.save(cbg);
+        seg.setId(UUID.randomUUID());
         entrepriseRepository.save(seg);
+        fiyaHollo.setId(UUID.randomUUID());
         entrepriseRepository.save(fiyaHollo);
     }
 
