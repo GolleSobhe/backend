@@ -10,9 +10,7 @@ import javax.validation.constraints.NotNull;
 /**
  * Created by telly on 28/10/18.
  */
-@Getter
-@Setter
-@NoArgsConstructor
+@Getter @Setter @NoArgsConstructor
 @Entity
 public class Candidature {
 

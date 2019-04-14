@@ -5,16 +5,10 @@ import com.hunter.job.domain.VerificationToken;
 import com.hunter.job.repositories.CandidatRepository;
 import com.hunter.job.repositories.VerificationTokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.UUID;
 
 /**
@@ -34,8 +28,27 @@ public class CandidatService {
     @Autowired
     private MailService mailService;
 
-    public Candidat findById(Long id) {
-        return candidatRepository.findById(id);
+    public Candidat save(Candidat candidat){
+        UUID id = UUID.randomUUID();
+        candidat.setId(id);
+        Candidat savedCandidat = candidatRepository.save(candidat);
+        return savedCandidat;
+    }
+
+    public void sendConfirmationEmail(Candidat candidat,String url){
+        String token = UUID.randomUUID().toString();
+        LocalDateTime dateExpirationToken = LocalDateTime.now().plusDays(1);
+        VerificationToken verificationToken = new VerificationToken(token,dateExpirationToken,candidat);
+        VerificationToken savedToken = verificationTokenRepository.save(verificationToken);
+        mailService.sendVerificationEmail(url,savedToken.getToken(),candidat.getEmail());
+    }
+
+    public String connect(String email, String password) {
+        Candidat c = candidatRepository.findByEmailAndPassword(email,password);
+        if(c == null){
+            return "bad";
+        }
+        return "good";
     }
 
     public String validateCandidat(String token){
@@ -50,13 +63,11 @@ public class CandidatService {
         return "good";
     }
 
-    public Candidat save(Candidat candidat,String url){
-        Candidat savedCandidat = candidatRepository.save(candidat);
-        sendConfirmationEmail(savedCandidat,url);
-        return savedCandidat;
+    public Candidat findById(UUID id) {
+        return candidatRepository.findById(id);
     }
 
-    public Candidat update(Long id, Candidat candidat) {
+    public Candidat update(UUID id, Candidat candidat) {
         Candidat currenCandidat = findById(id);
         currenCandidat.setNom(candidat.getNom());
         currenCandidat.setPrenom(candidat.getPrenom());
@@ -78,12 +89,7 @@ public class CandidatService {
         return  candidatRepository.save(candidat);
     }
 
-    private void sendConfirmationEmail(Candidat candidat,String url){
-        String token = UUID.randomUUID().toString();
-        LocalDateTime dateExpirationToken = LocalDateTime.now().plusDays(1);
-        VerificationToken verificationToken = new VerificationToken(token,dateExpirationToken,candidat);
-        VerificationToken savedToken = verificationTokenRepository.save(verificationToken);
-        mailService.sendVerificationEmail(url,savedToken.getToken(),candidat.getEmail());
-    }
+
+
 
 }

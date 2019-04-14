@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.UUID;
+
 /**
  * Created by telly on 28/10/18.
  */
@@ -33,7 +35,7 @@ public class CandidatureController {
     @ApiOperation(value = "enregistrer une candidature a une offre")
     @PostMapping(value = "/")
     public Candidature save(@RequestParam(value = "offre_id") Long offreId,
-                            @RequestParam(value = "candidat_id") Long candidatId){
+                            @RequestParam(value = "candidat_id") UUID candidatId){
         Candidat candidat = candidatService.findById(candidatId);
         Offre offre = offreService.findById(offreId);
         Candidature candidature = new Candidature();

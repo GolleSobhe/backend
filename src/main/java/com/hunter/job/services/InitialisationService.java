@@ -1,16 +1,12 @@
 package com.hunter.job.services;
 
-import com.hunter.job.domain.Candidat;
 import com.hunter.job.domain.Entreprise;
 import com.hunter.job.domain.Offre;
 import com.hunter.job.domain.TypeContrat;
-import com.hunter.job.dto.EntrepriseDto;
 import com.hunter.job.dto.OffreDto;
 import com.hunter.job.repositories.EntrepriseRepository;
 import com.hunter.job.repositories.OffreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -27,14 +23,10 @@ public class InitialisationService {
     @Autowired
     private EntrepriseRepository entrepriseRepository;
 
-    @Autowired
-    private CandidatService candidatService;
 
     private Entreprise cbg;
     private Entreprise seg;
     private Entreprise fiyaHollo;
-    private Candidat toto;
-    private Candidat tata;
 
     public void init(){
         initEntreprises();

@@ -10,6 +10,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.UUID;
 
 
 /**
@@ -30,10 +31,9 @@ public class EntrepriseService {
         return entrepriseRepository.findAll();
     }
 
-    public Entreprise findById(Long id){
+    public Entreprise findById(UUID id){
         return entrepriseRepository.findById(id);
     }
-
 
     public Entreprise update(Entreprise entreprise) {
         return entrepriseRepository.update(entreprise);

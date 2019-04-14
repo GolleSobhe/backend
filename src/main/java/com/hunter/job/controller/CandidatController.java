@@ -4,19 +4,17 @@ import com.hunter.job.domain.Candidat;
 import com.hunter.job.exception.FileStorageException;
 import com.hunter.job.services.CandidatService;
 import com.hunter.job.services.FileStorageService;
+import com.hunter.job.utils.FileDownloadUtils;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.http.ResponseEntity;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.io.IOException;
-
+import java.util.UUID;
 
 
 /**
@@ -27,7 +25,7 @@ import java.io.IOException;
 public class CandidatController{
 
     private static final String CV_PATH = "./src/main/resources/cv";
-
+    private static final String URL = "https://gollesobhe.github.io/hunterJobWeb/";
     @Autowired
     private CandidatService candidatService;
 
@@ -37,16 +35,25 @@ public class CandidatController{
     @PostMapping(value = "/")
     @ApiOperation(value = "enregistrer un candidat")
     public Candidat save(@Valid @RequestBody Candidat candidat,HttpServletRequest request){
-        String rootUrl = getBaseUrlFromRequest(request);
-       // String url = rootUrl+"/api/v1/candidats/verification/";
-        String url = "https://gollesobhe.github.io/hunterJobWeb/";
-        return candidatService.save(candidat,url);
+        Candidat savedCandidat = candidatService.save(candidat);
+        candidatService.sendConfirmationEmail(savedCandidat,URL);
+        return savedCandidat;
     }
 
+    @GetMapping(value = "/verification/{token}")
+    @ApiOperation(value = "valider un candidat")
+    public String validerCandidat(@PathVariable String token){
+        return  candidatService.validateCandidat(token);
+    }
+
+    @GetMapping(value = "/connection")
+    public String seConnecter(@RequestParam String email,@RequestParam String password){
+        return candidatService.connect(email,password);
+    }
 
     @GetMapping(value = "/{id}")
     @ApiOperation(value = "rechercher un candidat")
-    public Candidat getById(@PathVariable Long id) {
+    public Candidat getById(@PathVariable UUID id) {
         return candidatService.findById(id);
     }
 
@@ -56,11 +63,7 @@ public class CandidatController{
         return candidatService.update(candidat.getId(), candidat);
     }
 
-    @GetMapping(value = "/verification/{token}")
-    @ApiOperation(value = "valider un candidat")
-    public String validerCandidat(@PathVariable String token){
-        return  candidatService.validateCandidat(token);
-    }
+
 
     @PostMapping(value = "/{id}/cv")
     @ApiOperation(value = "enregistrer le cv d'un candidat")
@@ -72,16 +75,7 @@ public class CandidatController{
     @ApiOperation(value = "recuperer le cv d'un candidat")
     public  ResponseEntity<Resource> recupererCv(@PathVariable String id, HttpServletRequest request) throws FileStorageException {
         Resource resource = fileStorageService.retrieveFile(id,CV_PATH);
-        String contentType = null;
-        try {
-             contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
-        } catch (IOException e) {
-            throw new FileStorageException("non ");
-        }
-        return ResponseEntity.ok()
-                .contentType(MediaType.parseMediaType(contentType))
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
-                .body(resource);
+        return FileDownloadUtils.downloadResource(resource,request);
     }
 
 

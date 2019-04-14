@@ -1,17 +1,16 @@
 package com.hunter.job.domain;
 
-import com.hunter.job.dto.CandidatDto;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.UUID;
 
 /**
  * Created by telly on 11/02/18.
@@ -24,8 +23,7 @@ public class Candidat{
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private UUID id;
 
     @NotNull
     @Size(min = 1)
@@ -41,7 +39,8 @@ public class Candidat{
     private String email;
 
     @NotNull
-    private String motDePasse;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String password;
 
     private String telephone;
 
@@ -67,12 +66,6 @@ public class Candidat{
 
     private boolean estValide = false;
 
-    public Candidat(String nom, String prenom, String email, String motDePasse) {
-        this.nom = nom;
-        this.prenom = prenom;
-        this.email = email;
-        this.motDePasse = motDePasse;
-    }
 
     public  void validerCandidat(){
         estValide = true;

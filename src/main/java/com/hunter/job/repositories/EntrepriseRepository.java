@@ -8,6 +8,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by telly on 28/01/18.
@@ -30,7 +31,7 @@ public class EntrepriseRepository {
         return entreprise;
     }
 
-    public Entreprise findById(Long id){
+    public Entreprise findById(UUID id){
         return  entityManager.find(Entreprise.class,id);
     }
 
