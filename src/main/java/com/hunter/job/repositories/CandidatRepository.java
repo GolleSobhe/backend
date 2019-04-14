@@ -3,11 +3,9 @@ package com.hunter.job.repositories;
 import com.hunter.job.domain.Candidat;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
+import javax.persistence.*;
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -25,21 +23,30 @@ public class CandidatRepository {
         return candidat;
     }
 
-
     public Candidat findById(UUID candidatId) {
         return entityManager.find(Candidat.class,candidatId);
     }
 
-    public Candidat findByEmailAndPassword(String email,String password){
+    public Candidat findByEmailAndPassword(String email,String password) {
         TypedQuery<Candidat> query = entityManager.createQuery("Select c from Candidat c where c.email =:email " +
-                        "and c.password =:password and c.estValide =:valide",Candidat.class);
-        query.setParameter("email",email);
-        query.setParameter("password",password);
-        query.setParameter("valide",true);
+                "and c.password =:password and c.estValide =:valide", Candidat.class);
+        query.setParameter("email", email);
+        query.setParameter("password", password);
+        query.setParameter("valide", true);
         try {
             return query.getSingleResult();
-        }catch (NoResultException e){
+        } catch (NoResultException e) {
             return null;
         }
+    }
+
+    public List<Candidat> findAll() {
+        TypedQuery<Candidat> query = entityManager.createQuery("SELECT candidat FROM Candidat candidat order by candidat.nom asc ",Candidat.class);
+        return query.getResultList();
+    }
+
+    public Candidat update(Candidat candidat) {
+        entityManager.merge(candidat);
+        return candidat;
     }
 }

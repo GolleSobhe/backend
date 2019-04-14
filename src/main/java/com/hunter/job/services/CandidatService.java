@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -52,14 +53,14 @@ public class CandidatService {
     }
 
     public String validateCandidat(String token){
-        VerificationToken verificationToken = verificationTokenRepository.findByToken(token);
-        if(verificationToken == null || verificationToken.getDateExpiration().isBefore(LocalDateTime.now())){
+        VerificationToken verificationTokenCandidat = verificationTokenRepository.findByToken(token);
+        if(verificationTokenCandidat == null || verificationTokenCandidat.getDateExpiration().isBefore(LocalDateTime.now())){
             return "bad";
         }
-        Candidat candidat = verificationToken.getCandidat();
+        Candidat candidat = verificationTokenCandidat.getCandidat();
         candidat.validerCandidat();
         candidatRepository.save(candidat);
-        verificationTokenRepository.delete(verificationToken);
+        verificationTokenRepository.delete(verificationTokenCandidat);
         return "good";
     }
 
@@ -67,8 +68,8 @@ public class CandidatService {
         return candidatRepository.findById(id);
     }
 
-    public Candidat update(UUID id, Candidat candidat) {
-        Candidat currenCandidat = findById(id);
+    public Candidat update(Candidat candidat) {
+        Candidat currenCandidat = findById(candidat.getId());
         currenCandidat.setNom(candidat.getNom());
         currenCandidat.setPrenom(candidat.getPrenom());
         currenCandidat.setEmail(candidat.getEmail());
@@ -86,10 +87,12 @@ public class CandidatService {
         currenCandidat.setApprentissage(candidat.getApprentissage());
         currenCandidat.setProfessionnalisation(candidat.getProfessionnalisation());
         currenCandidat.setFreelance(candidat.getFreelance());
-        return  candidatRepository.save(candidat);
+        return  candidatRepository.update(currenCandidat);
     }
 
-
+    public List<Candidat> findAll() {
+        return candidatRepository.findAll();
+    }
 
 
 }

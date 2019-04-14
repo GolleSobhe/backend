@@ -4,6 +4,7 @@ import com.hunter.job.domain.Entreprise;
 import com.hunter.job.domain.Offre;
 import com.hunter.job.domain.TypeContrat;
 import com.hunter.job.dto.OffreDto;
+import com.hunter.job.repositories.CandidatRepository;
 import com.hunter.job.repositories.EntrepriseRepository;
 import com.hunter.job.repositories.OffreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,9 @@ public class InitialisationService {
     @Autowired
     private EntrepriseRepository entrepriseRepository;
 
+
+    @Autowired
+    private CandidatRepository  candidatRepository;
 
     private Entreprise cbg;
     private Entreprise seg;
@@ -3973,8 +3977,6 @@ public class InitialisationService {
         offreRepository.save(cbgInformaticien);
         offreRepository.save(segComptable);
     }
-
-
 
 
 }
